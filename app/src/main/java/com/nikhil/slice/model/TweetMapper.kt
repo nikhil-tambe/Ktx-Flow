@@ -4,10 +4,12 @@ package com.nikhil.slice.model
 import com.nikhil.slice.db.tweets.TweetsEntity
 import com.nikhil.slice.network.response.ResponseTweetData
 import com.nikhil.slice.util.Mapper
+import javax.inject.Inject
 
-class TweetMapper: Mapper<ResponseTweetData, TweetsEntity, Tweet> {
+class TweetMapper
+@Inject constructor() : Mapper<ResponseTweetData, TweetsEntity, Tweet> {
 
-    override fun responseToEntity(data: ResponseTweetData) : TweetsEntity {
+    override fun responseToEntity(data: ResponseTweetData): TweetsEntity {
         return TweetsEntity(
             name = data.name,
             handle = data.handle,
@@ -28,6 +30,10 @@ class TweetMapper: Mapper<ResponseTweetData, TweetsEntity, Tweet> {
             tweetText = entity.tweetText,
             id = entity.id
         )
+    }
+
+    fun entityListToModelList(entityList: List<TweetsEntity>): List<Tweet> {
+        return entityList.map { entityToModel(it) }
     }
 
 }

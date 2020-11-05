@@ -3,8 +3,10 @@ package com.nikhil.slice.app
 import android.app.Application
 import android.util.Log
 import com.nikhil.slice.BuildConfig
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
+@HiltAndroidApp
 class ApplicationClass : Application() {
 
     override fun onCreate() {

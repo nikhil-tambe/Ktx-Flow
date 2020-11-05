@@ -11,4 +11,7 @@ interface TweetsDao : BaseDao<TweetsEntity> {
     @Query("select * from tweets")
     fun observeAllTweets() : LiveData<List<TweetsEntity>>
 
+    @Query("select * from tweets")
+    suspend fun getAllTweets(): List<TweetsEntity>
+
 }
