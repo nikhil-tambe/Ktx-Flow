@@ -8,6 +8,7 @@ import com.nikhil.slice.util.DataState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 
 class MainRepository
 constructor(
@@ -16,13 +17,20 @@ constructor(
     private val mapper: TweetMapper
 ) {
 
+    var allTweets: List<Tweet> = ArrayList()
+
     suspend fun getTweets(): Flow<DataState<List<Tweet>>> = flow {
         emit(DataState.Loading)
         delay(700) // only to show sync animation
 
+        if (allTweets.isNotEmpty()) {
+            emit(DataState.Success(allTweets))
+            return@flow
+        }
+
         val allTweetFromDB = tweetsDao.getAllTweets()
         if (allTweetFromDB.isNotEmpty()) {
-            val allTweets = mapper.entityListToModelList(allTweetFromDB)
+            allTweets = mapper.entityListToModelList(allTweetFromDB)
             emit(DataState.Success(allTweets))
             return@flow
         }
@@ -31,11 +39,29 @@ constructor(
             val response = twitterApi.getTweets()
             val entityList = response.data.map { mapper.responseToEntity(it) }
             entityList.forEach { tweetsDao.insert(it) }
-            val allTweets = mapper.entityListToModelList(tweetsDao.getAllTweets())
+            allTweets = mapper.entityListToModelList(tweetsDao.getAllTweets())
             emit(DataState.Success(allTweets))
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }
+    }
+
+    suspend fun getFilteredList(query: String): Flow<DataState<List<Tweet>>> = flow {
+        if (query.isEmpty()) {
+            emit(DataState.Success(allTweets))
+            return@flow
+        }
+
+        Timber.d("New Text: $query")
+        emit(DataState.Loading)
+        delay(500) // only to show sync animation
+
+        val filteredList = allTweets.filter { data ->
+            data.name.contains(query, true)
+                    || data.handle.contains(query, true)
+                    || data.tweetText.contains(query, true)
+        }
+        emit(DataState.Success(filteredList))
     }
 
 }

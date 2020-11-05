@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".ui.main.MainFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +31,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_TextInputEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

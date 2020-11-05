@@ -32,4 +32,14 @@ class MainViewModel
         }
     }
 
+    fun searchTweet(s: String) {
+        viewModelScope.launch {
+            mainRepository.getFilteredList(s)
+                .onEach { dataState ->
+                    _listOfTweetsState.value = dataState
+                }
+                .launchIn(viewModelScope)
+        }
+    }
+
 }

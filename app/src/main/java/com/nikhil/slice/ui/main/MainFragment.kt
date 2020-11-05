@@ -11,6 +11,7 @@ import com.nikhil.slice.util.DataState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -25,6 +26,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         tweets_RecyclerView.adapter = adapter
 
         allTweets()
+
+        search_Button.setOnClickListener {
+            val s = name_TextInputEditText.text.toString()
+            viewModel.searchTweet(s)
+        }
+
     }
 
     private fun allTweets() {
@@ -38,7 +45,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     adapter.submitList(it.data)
                 }
                 is DataState.Error -> {
-                    it.e.localizedMessage?.let {msg ->
+                    it.e.localizedMessage?.let { msg ->
                         Snackbar.make(requireView(), msg, Snackbar.LENGTH_SHORT)
                             .show()
                     }
