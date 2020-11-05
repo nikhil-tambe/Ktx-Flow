@@ -1,8 +1,11 @@
 package com.nikhil.slice.util
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import timber.log.Timber
 
-fun String.checkTwitterUrl() : String{
+fun String.checkTwitterUrl(): String {
     val s = if (this.contains("twitter", true)) {
         when {
             this.contains("planet", true) -> {
@@ -29,4 +32,17 @@ fun String.checkTwitterUrl() : String{
     }
     Timber.d("New Url ==> $s")
     return s
+}
+
+fun Context.isOnline(): Boolean {
+    val connectivityManager =
+        this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val capabilities =
+        connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+    capabilities?.let {
+        return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+    }
+    return false
 }

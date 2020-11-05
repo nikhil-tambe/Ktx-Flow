@@ -48,23 +48,25 @@ constructor(
         }
     }
 
-    suspend fun getFilteredList(query: String): Flow<DataState<List<Tweet>>> = flow {
-        if (query.isEmpty()) {
-            emit(DataState.Success(allTweets))
-            return@flow
-        }
+    suspend fun getFilteredList(query: String, animate: Boolean): Flow<DataState<List<Tweet>>> =
+        flow {
+            if (query.isEmpty()) {
+                emit(DataState.Success(allTweets))
+                return@flow
+            }
 
-        Timber.d("New Text: $query")
-        emit(DataState.Loading)
-        delay(FAKE_PROGRESS) // only to show sync animation
-
-        val trimmed = query.trim()
-        val filteredList = allTweets.filter { data ->
-            data.name.contains(trimmed, true)
-                    || data.handle.contains(trimmed, true)
-                    || data.tweetText.contains(trimmed, true)
+            Timber.d("New Text: $query")
+            if (animate) {
+                emit(DataState.Loading)
+                delay(FAKE_PROGRESS) // only to show sync animation
+            }
+            val trimmed = query.trim()
+            val filteredList = allTweets.filter { data ->
+                data.name.contains(trimmed, true)
+                        || data.handle.contains(trimmed, true)
+                        || data.tweetText.contains(trimmed, true)
+            }
+            emit(DataState.Success(filteredList))
         }
-        emit(DataState.Success(filteredList))
-    }
 
 }

@@ -12,9 +12,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.nikhil.slice.R
 import com.nikhil.slice.ui.main.adapter.TweetRecyclerAdapter
 import com.nikhil.slice.util.DataState
+import com.nikhil.slice.util.isOnline
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import timber.log.Timber
+import java.net.UnknownHostException
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -26,10 +29,15 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tweets_RecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
+        tweets_RecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                LinearLayoutManager.VERTICAL
+            )
+        )
         tweets_RecyclerView.adapter = adapter
 
-        allTweets()
+        observeDataState()
 
         search_Button.setOnClickListener {
             val s = name_TextInputEditText.text.toString()
@@ -45,7 +53,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
     }
 
-    private fun allTweets() {
+    private fun observeDataState() {
         viewModel.getAllTweets()
         viewModel.listOfTweetsState.observe(viewLifecycleOwner) {
             loading_Lottie.visibility = View.GONE
@@ -60,9 +68,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     adapter.submitList(it.data)
                 }
                 is DataState.Error -> {
-                    it.e.localizedMessage?.let { msg ->
-                        Snackbar.make(requireView(), msg, Snackbar.LENGTH_SHORT)
-                            .show()
+                    Timber.e(it.e)
+                    var message = it.e.localizedMessage
+                    if (it.e is UnknownHostException && !requireContext().isOnline()) {
+                        message = "Please enable internet and restart app"
+                    }
+                    message?.let { msg ->
+                        Snackbar.make(requireView(), msg, Snackbar.LENGTH_SHORT).show()
                     }
                 }
             }

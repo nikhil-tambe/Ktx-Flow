@@ -13,14 +13,24 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 class MainViewModel
 @ViewModelInject constructor(
-    private val mainRepository: MainRepository
+    private val mainRepository: MainRepository,
+    @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    companion object {
+        private val KEY_QUERY = "query"
+    }
 
     private val _listOfTweetsState: MutableLiveData<DataState<List<Tweet>>> = MutableLiveData()
     val listOfTweetsState: LiveData<DataState<List<Tweet>>>
         get() = _listOfTweetsState
 
     fun getAllTweets() {
+        val query = savedStateHandle.get<String>(KEY_QUERY)
+        if (!query.isNullOrBlank()) {
+            searchTweet(query, false)
+            return
+        }
         viewModelScope.launch {
             mainRepository.getTweets()
                 .onEach { dataState ->
@@ -30,9 +40,10 @@ class MainViewModel
         }
     }
 
-    fun searchTweet(s: String) {
+    fun searchTweet(s: String, animate: Boolean = true) {
+        savedStateHandle[KEY_QUERY] = s
         viewModelScope.launch {
-            mainRepository.getFilteredList(s)
+            mainRepository.getFilteredList(s, animate)
                 .onEach { dataState ->
                     _listOfTweetsState.value = dataState
                 }
