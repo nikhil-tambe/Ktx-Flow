@@ -7,13 +7,63 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="buttonStyle">@style/ButtonStyle</item>
+
     </style>
 
+    <!-- Text Input Style -->
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_margin">@dimen/marginS</item>
         <item name="errorEnabled">false</item>
         <item name="android:hint">@string/enter_text</item>
         <item name="android:layout_marginBottom">@dimen/marginM</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
     </style>
+
+    <!-- Button Style -->
+    <style name="ButtonStyle" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@color/colorButtonText</item>
+        <item name="android:paddingStart">@dimen/button_padding_width</item>
+        <item name="android:paddingTop">@dimen/button_padding_height</item>
+        <item name="android:paddingBottom">@dimen/button_padding_height</item>
+        <item name="android:paddingEnd">@dimen/button_padding_width</item>
+        <item name="android:elevation">@dimen/button_elevation</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:background">@drawable/background_button</item>
+    </style>
+
+    <!-- Text Style For Name -->
+    <style name="TextStyleName" parent="Widget.AppCompat.TextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorText900</item>
+        <item name="android:textSize">@dimen/textL</item>
+    </style>
+
+    <!-- Text Style For Handle -->
+    <style name="TextStyleHandle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorText500</item>
+        <item name="android:textSize">@dimen/textM</item>
+    </style>
+
+    <!-- Text Style For Tweet -->
+    <style name="TextStyleTweet" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorText900</item>
+        <item name="android:textSize">@dimen/textS</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:layout_marginTop">@dimen/marginS</item>
+    </style>
+
+    <!-- Text Style For Tweet Counts -->
+    <style name="TextStyleTweetCounts" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorText700</item>
+        <item name="android:textSize">@dimen/textS</item>
+        <item name="android:drawablePadding">@dimen/marginS</item>
+    </style>
+
 
 </resources>

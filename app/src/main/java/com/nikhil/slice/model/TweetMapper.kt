@@ -4,6 +4,7 @@ package com.nikhil.slice.model
 import com.nikhil.slice.db.tweets.TweetsEntity
 import com.nikhil.slice.network.response.ResponseTweetData
 import com.nikhil.slice.util.Mapper
+import com.nikhil.slice.util.checkTwitterUrl
 import javax.inject.Inject
 
 class TweetMapper
@@ -13,7 +14,7 @@ class TweetMapper
         return TweetsEntity(
             name = data.name,
             handle = data.handle,
-            image = data.image,
+            image = data.image.checkTwitterUrl(),
             favCount = data.favCount,
             retweetCount = data.retweetCount,
             tweetText = data.tweetText

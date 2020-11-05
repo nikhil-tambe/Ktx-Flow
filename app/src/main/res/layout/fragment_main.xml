@@ -12,9 +12,7 @@
         android:id="@+id/search_CL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marginL"
-        android:layout_marginTop="@dimen/marginXL"
-        android:layout_marginEnd="@dimen/marginL"
+        android:layout_margin="@dimen/marginM"
         android:background="@drawable/background_card"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -42,8 +40,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/marginS"
-            android:paddingStart="@dimen/marginL"
-            android:paddingEnd="@dimen/marginL"
             android:text="@string/search"
             app:layout_constraintBottom_toBottomOf="@id/search_TIL"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,17 +47,36 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tweets_RecyclerView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/marginL"
-        android:layout_marginTop="@dimen/marginM"
-        android:layout_marginEnd="@dimen/marginL"
+        android:layout_margin="@dimen/marginM"
         android:background="@drawable/background_card"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_CL"
-        tools:listitem="@layout/layout_item_tweet" />
+        app:layout_constraintTop_toBottomOf="@id/search_CL">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_Lottie"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loading.json"
+            app:lottie_loop="false" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tweets_RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingStart="@dimen/marginS"
+            android:paddingEnd="@dimen/marginS"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loading_Lottie"
+            tools:listitem="@layout/layout_item_tweet" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

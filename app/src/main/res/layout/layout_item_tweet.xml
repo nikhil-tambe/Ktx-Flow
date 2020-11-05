@@ -14,18 +14,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:padding="@dimen/marginS">
+        android:paddingStart="@dimen/marginS"
+        android:paddingTop="@dimen/marginM"
+        android:paddingEnd="@dimen/marginS"
+        android:paddingBottom="@dimen/marginM">
 
         <ImageView
             android:id="@+id/profilePic_ImageView"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/background_ring"
+            android:padding="@dimen/ring_stroke"
             app:glideImage="@{tweet.image}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/name_TextView"
+            style="@style/TextStyleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/marginL"
@@ -33,47 +39,46 @@
             app:layout_constraintBottom_toTopOf="@id/handle_TextView"
             app:layout_constraintStart_toEndOf="@id/profilePic_ImageView"
             app:layout_constraintTop_toTopOf="@id/profilePic_ImageView"
-            tools:text="@string/name" />
+            tools:text="Name" />
 
         <TextView
             android:id="@+id/handle_TextView"
+            style="@style/TextStyleHandle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{tweet.handle}"
             app:layout_constraintBottom_toBottomOf="@id/profilePic_ImageView"
             app:layout_constraintStart_toStartOf="@id/name_TextView"
-            tools:text="@string/handle" />
+            tools:text="Handle" />
 
         <TextView
             android:id="@+id/likeCount_TextView"
+            style="@style/TextStyleTweetCounts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_fav"
-            android:drawablePadding="@dimen/marginS"
             app:layout_constraintBottom_toTopOf="@id/rtCount_TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:printInt="@{tweet.favCount}"
-            tools:text="@string/like_count" />
+            tools:text="Likes" />
 
         <TextView
             android:id="@+id/rtCount_TextView"
+            style="@style/TextStyleTweetCounts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_retweet"
-            android:drawablePadding="@dimen/marginS"
             app:layout_constraintBottom_toTopOf="@id/handle_TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:printInt="@{tweet.retweetCount}"
-            tools:text="@string/rt_count" />
+            tools:text="Re-Tweets" />
 
         <TextView
             android:id="@+id/tweet_TextView"
+            style="@style/TextStyleTweet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/marginS"
-            android:ellipsize="end"
-            android:maxLines="3"
             android:text="@{tweet.tweetText}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

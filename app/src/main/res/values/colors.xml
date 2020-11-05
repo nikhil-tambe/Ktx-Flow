@@ -6,9 +6,17 @@
     <color name="colorAccent">#378AC4</color>
 
     <color name="colorBackground">#E9EAEB</color>
-    <color name="colorText">#ffffff</color>
+    <color name="colorOnPrimary">#ffffff</color>
 
     <color name="colorCard">#FEFFFF</color>
     <color name="dull_white">#C5C5C5</color>
+
+    <color name="colorText900">#212121</color>
+    <color name="colorText700">#616161</color>
+    <color name="colorText500">#9E9E9E</color>
+
+    <color name="colorButtonEnabled">#2B8FF4</color>
+    <color name="colorButtonDisabled">#6289B1</color>
+    <color name="colorButtonText">#FFFFFF</color>
 
 </resources>

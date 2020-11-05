@@ -1,14 +1,12 @@
 <resources>
     <string name="app_name">SliceTwitter</string>
+
+    <!-- Splash Screen -->
     <string name="tw_search_client">TW Search Client</string>
 
     <!-- Tweet Recycler Items -->
-    <string name="name">Name</string>
-    <string name="handle">Handle</string>
-    <string name="like_count">Like Count</string>
-    <string name="rt_count">RT Count</string>
-    <string name="sample_tweet">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tristique sollicitudin semper. Phasellus consectetur nisi augue, ut scelerisque justo ornare a. Curabitur sed nunc ultricies, consectetur dolor a, aliquam nulla. In id accumsan.</string>
     <string name="enter_text">Enter Text</string>
     <string name="search">Search</string>
+    <string name="sample_tweet">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tristique sollicitudin semper. Phasellus consectetur nisi augue, ut scelerisque justo ornare a. Curabitur sed nunc ultricies, consectetur dolor a, aliquam nulla. In id accumsan.</string>
 
 </resources>

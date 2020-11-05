@@ -6,10 +6,16 @@
     <dimen name="marginL">24dp</dimen>
     <dimen name="marginXL">36dp</dimen>
 
-    <dimen name="textS">12sp</dimen>
+    <dimen name="textS">14sp</dimen>
     <dimen name="textM">16sp</dimen>
     <dimen name="textL">24sp</dimen>
 
+    <dimen name="button_corner_radius">8dp</dimen>
+    <dimen name="button_padding_width">24dp</dimen>
+    <dimen name="button_padding_height">12dp</dimen>
+    <dimen name="button_elevation">4dp</dimen>
+
     <dimen name="card_corner_radius">5dp</dimen>
+    <dimen name="ring_stroke">1dp</dimen>
 
 </resources>

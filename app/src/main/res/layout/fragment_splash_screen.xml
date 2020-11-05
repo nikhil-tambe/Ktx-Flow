@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/colorOnPrimary"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/marginL"
         android:textSize="@dimen/textL"

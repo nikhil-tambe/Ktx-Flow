@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 
+const val FAKE_PROGRESS = 700L
+
 class MainRepository
 constructor(
     private val twitterApi: TwitterApi,
@@ -21,7 +23,7 @@ constructor(
 
     suspend fun getTweets(): Flow<DataState<List<Tweet>>> = flow {
         emit(DataState.Loading)
-        delay(700) // only to show sync animation
+        delay(FAKE_PROGRESS) // only to show sync animation
 
         if (allTweets.isNotEmpty()) {
             emit(DataState.Success(allTweets))
@@ -54,12 +56,13 @@ constructor(
 
         Timber.d("New Text: $query")
         emit(DataState.Loading)
-        delay(500) // only to show sync animation
+        delay(FAKE_PROGRESS) // only to show sync animation
 
+        val trimmed = query.trim()
         val filteredList = allTweets.filter { data ->
-            data.name.contains(query, true)
-                    || data.handle.contains(query, true)
-                    || data.tweetText.contains(query, true)
+            data.name.contains(trimmed, true)
+                    || data.handle.contains(trimmed, true)
+                    || data.tweetText.contains(trimmed, true)
         }
         emit(DataState.Success(filteredList))
     }
