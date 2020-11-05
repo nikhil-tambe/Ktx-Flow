@@ -7,5 +7,5 @@ data class Tweet(
     val retweetCount: Int,
     val favCount: Int,
     val tweetText: String,
-    val timestamp: Long
+    val id: Long
 )
