@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="marginS">8dp</dimen>
+    <dimen name="marginM">16dp</dimen>
+    <dimen name="marginL">24dp</dimen>
+    <dimen name="marginXL">36dp</dimen>
+
+    <dimen name="textS">12sp</dimen>
+    <dimen name="textM">16sp</dimen>
+    <dimen name="textL">24sp</dimen>
+
+    <dimen name="card_corner_radius">5dp</dimen>
+
+</resources>

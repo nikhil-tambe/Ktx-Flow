@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="tweet"
+            type="com.nikhil.slice.model.Tweet" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="@dimen/marginS">
+
+        <ImageView
+            android:id="@+id/profilePic_ImageView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            app:glideImage="@{tweet.image}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginL"
+            android:text="@{tweet.name}"
+            app:layout_constraintBottom_toTopOf="@id/handle_TextView"
+            app:layout_constraintStart_toEndOf="@id/profilePic_ImageView"
+            app:layout_constraintTop_toTopOf="@id/profilePic_ImageView"
+            tools:text="@string/name" />
+
+        <TextView
+            android:id="@+id/handle_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{tweet.handle}"
+            app:layout_constraintBottom_toBottomOf="@id/profilePic_ImageView"
+            app:layout_constraintStart_toStartOf="@id/name_TextView"
+            tools:text="@string/handle" />
+
+        <TextView
+            android:id="@+id/likeCount_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_fav"
+            android:drawablePadding="@dimen/marginS"
+            app:layout_constraintBottom_toTopOf="@id/rtCount_TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:printInt="@{tweet.favCount}"
+            tools:text="@string/like_count" />
+
+        <TextView
+            android:id="@+id/rtCount_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_retweet"
+            android:drawablePadding="@dimen/marginS"
+            app:layout_constraintBottom_toTopOf="@id/handle_TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:printInt="@{tweet.retweetCount}"
+            tools:text="@string/rt_count" />
+
+        <TextView
+            android:id="@+id/tweet_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginS"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@{tweet.tweetText}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profilePic_ImageView"
+            tools:text="@string/sample_tweet" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
