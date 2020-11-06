@@ -1,4 +1,4 @@
-package com.nikhil.slice.ui.main
+package com.nikhil.slice.repositories
 
 import com.nikhil.slice.db.tweets.TweetsDao
 import com.nikhil.slice.model.Tweet
@@ -7,21 +7,22 @@ import com.nikhil.slice.network.TwitterApi
 import com.nikhil.slice.util.DataState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 
 const val FAKE_PROGRESS = 700L
 
-class MainRepository
+class TweetsRepository
 constructor(
     private val twitterApi: TwitterApi,
     private val tweetsDao: TweetsDao,
     private val mapper: TweetMapper
-) {
+) : ITweetsRepo {
 
     var allTweets: List<Tweet> = ArrayList()
 
-    suspend fun getTweets(): Flow<DataState<List<Tweet>>> = flow {
+    override suspend fun getTweets(): Flow<DataState<List<Tweet>>> = flow {
         emit(DataState.Loading)
         delay(FAKE_PROGRESS) // only to show sync animation
 
@@ -30,10 +31,9 @@ constructor(
             return@flow
         }
 
-        val allTweetFromDB = tweetsDao.getAllTweets()
-        if (allTweetFromDB.isNotEmpty()) {
-            allTweets = mapper.entityListToModelList(allTweetFromDB)
-            emit(DataState.Success(allTweets))
+        val tweetsCount = tweetsDao.getAllTweetsCount()
+        if (tweetsCount > 0) {
+            postAllTweets()
             return@flow
         }
 
@@ -41,14 +41,18 @@ constructor(
             val response = twitterApi.getTweets()
             val entityList = response.data.map { mapper.responseToEntity(it) }
             entityList.forEach { tweetsDao.insert(it) }
-            allTweets = mapper.entityListToModelList(tweetsDao.getAllTweets())
-            emit(DataState.Success(allTweets))
+            postAllTweets()
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }
     }
 
-    suspend fun getFilteredList(query: String, animate: Boolean): Flow<DataState<List<Tweet>>> =
+    private suspend fun FlowCollector<DataState<List<Tweet>>>.postAllTweets() {
+        allTweets = mapper.entityListToModelList(tweetsDao.getAllTweets())
+        emit(DataState.Success(allTweets))
+    }
+
+    override suspend fun getFilteredList(query: String, animate: Boolean): Flow<DataState<List<Tweet>>> =
         flow {
             if (query.isEmpty()) {
                 emit(DataState.Success(allTweets))

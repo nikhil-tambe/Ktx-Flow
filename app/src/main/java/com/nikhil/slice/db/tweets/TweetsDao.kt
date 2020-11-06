@@ -9,9 +9,12 @@ import com.nikhil.slice.db.BaseDao
 interface TweetsDao : BaseDao<TweetsEntity> {
 
     @Query("select * from tweets")
-    fun observeAllTweets() : LiveData<List<TweetsEntity>>
+    fun observeAllTweets(): LiveData<List<TweetsEntity>>
 
     @Query("select * from tweets")
     suspend fun getAllTweets(): List<TweetsEntity>
+
+    @Query("select count(*) from tweets")
+    suspend fun getAllTweetsCount(): Int
 
 }

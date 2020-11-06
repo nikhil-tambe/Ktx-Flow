@@ -4,6 +4,8 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.nikhil.slice.model.Tweet
+import com.nikhil.slice.repositories.ITweetsRepo
+import com.nikhil.slice.repositories.TweetsRepository
 import com.nikhil.slice.util.DataState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
@@ -13,7 +15,7 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 class MainViewModel
 @ViewModelInject constructor(
-    private val mainRepository: MainRepository,
+    private val tweetsRepository: ITweetsRepo,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -32,7 +34,7 @@ class MainViewModel
             return
         }
         viewModelScope.launch {
-            mainRepository.getTweets()
+            tweetsRepository.getTweets()
                 .onEach { dataState ->
                     _listOfTweetsState.value = dataState
                 }
@@ -43,7 +45,7 @@ class MainViewModel
     fun searchTweet(s: String, animate: Boolean = true) {
         savedStateHandle[KEY_QUERY] = s
         viewModelScope.launch {
-            mainRepository.getFilteredList(s, animate)
+            tweetsRepository.getFilteredList(s, animate)
                 .onEach { dataState ->
                     _listOfTweetsState.value = dataState
                 }
